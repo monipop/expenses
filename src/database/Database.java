@@ -1,8 +1,11 @@
 package database;
 
 
+import dao.DateConversions;
+
 import java.io.*;
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 /**
@@ -118,7 +121,6 @@ public class Database {
     private List<String> getColumns(ResultSet resultSet) {
         List<String> columns = new ArrayList<>();
         try {
-            System.out.println("META DATA: " + resultSet.getMetaData());
             for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
                 columns.add(resultSet.getMetaData().getColumnName(i));
             }
@@ -142,13 +144,30 @@ public class Database {
             return data.get(column);
         }
 
-        public Integer getInt(String column) {
+        public Integer getInteger(String column) {
             if (!data.containsKey(column)) {
                 throw new IllegalArgumentException("Column does not exists " + column);
             }
             return Integer.parseInt(getString(column));
         }
+
+        public Double getDouble(String column) {
+            if (!data.containsKey(column)) {
+                throw new IllegalArgumentException("Column does not exists " + column);
+            }
+            return Double.parseDouble(getString(column));
+        }
+
+        public Date getDate(String column) {
+            if (!data.containsKey(column)) {
+                throw new IllegalArgumentException("Column does not exists " + column);
+            }
+            String data = getString(column);
+
+            return DateConversions.convertStringDateToSqlDate(data);
+        }
     }
+
 
     public int lastInsertId() {
         int id = 0;
@@ -164,7 +183,4 @@ public class Database {
         }
         return id;
     }
-
-
-
 }

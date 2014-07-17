@@ -1,4 +1,5 @@
-config.propertirs
+config.properties
+tests.properties
 out/*
 Expenses.iml
-.idea/
+.idea/*

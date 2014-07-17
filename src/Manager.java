@@ -3,6 +3,9 @@ import dataTypes.Account;
 import dataTypes.Expense;
 import dataTypes.Label;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
@@ -15,22 +18,16 @@ import java.util.HashSet;
  */
 public class Manager extends Database {
 
-    public List<Expense> getExpensesFromThisWeek() {
-        List<Expense> expenses;
-
-
-        return null;
-    }
-
-
-    //expense
-
 
     public static java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
         return new java.sql.Date(date.getTime());
     }
 
-
+    public static java.sql.Date convertStringDateToSqlDate(String data) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsed = format.parse(data);
+        return new java.sql.Date(parsed.getTime());
+    }
 
 
     public static void main(String[] args) {

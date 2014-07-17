@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import dataTypes.Account;
 
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: moni
@@ -22,7 +24,7 @@ public class AccountTest {
     @Test
     public void testInsertAccount() {
         AccountManager m = new AccountManager(connection);
-        String name = "hhh";
+        String name = "account" + accountNr();
         Account a = new Account(name);
 
         int id = m.addAccount(a);
@@ -42,5 +44,10 @@ public class AccountTest {
         m.addAccount(a);
     }
 
+
+    public final Integer accountNr() {
+        Map<String, String> properties = Files.readProperties("tests.properties");
+        return Integer.parseInt(properties.get("account"));
+    }
 
 }

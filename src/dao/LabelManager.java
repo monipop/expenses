@@ -3,7 +3,6 @@ package dao;
 import database.Database;
 import dataTypes.Label;
 
-import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,26 +15,28 @@ import java.util.Set;
  */
 public class LabelManager {
     private Database connection;
+    private Integer accountId;
 
-    public LabelManager(Database connection) {
+    public LabelManager(Database connection, Integer accountId) {
         this.connection = connection;
+        this.accountId = accountId;
     }
 
     //defines labels
-    public void addLabels(Set<String> labels, Integer accountId) {
+    public void addLabels(Set<String> labels) {
         for (String label : labels) {
-            addLabel(label, accountId);
+            addLabel(label);
         }
     }
 
     //defines labels
-    public Integer addLabel(String label, Integer accountId) {
+    public Integer addLabel(String label) {
         Set<String> labels = new HashSet<>();
         labels.add(label);
         labels = verifyLabelsForInsertion(labels, accountId);
 
         for (String l : labels) {
-            String sql = "INSERT INTO label (id_account, name) VALUES(" + accountId + ", '" + l + "')";
+            String sql = String.format("INSERT INTO label (id_account, name) VALUES(%s, %s)", accountId, l);
             System.out.println(sql);
             connection.update(sql);
         }
@@ -43,17 +44,8 @@ public class LabelManager {
     }
 
     public Label getLabelById(Integer id) {
-//        String name = null;
-//        try {
-//            String query = "SELECT * FROM label WHERE id=" + id;
-//            ResultSet result = connection.fetch(query);
-//            result.next();
-//            name = result.getString("name");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return name;
-        List<Database.Row> data = connection.fetchAll("SELECT * FROM label WHERE id=" + id);
+        String sql = String.format("SELECT * FROM label WHERE id=%s", id);
+        List<Database.Row> data = connection.fetchAll(sql);
         if (!data.isEmpty()) {
             return new Label(id, data.get(0).getString("name"));
         } else {
@@ -64,27 +56,23 @@ public class LabelManager {
 
     //remove labels already existing in db from the insert list
     public Set<String> verifyLabelsForInsertion(Set<String> labels, Integer accountId) {
-        try {
-            if (labels != null && labels.size() != 0) {
-                String sql = "SELECT * FROM label WHERE id_account=" + accountId;
-                ResultSet accountLabels = connection.fetch(sql);
+        if (labels != null && labels.size() != 0) {
+            Set<Label> accountLabels = getLabels();
 
-                while (accountLabels.next()) {
-                    String accountLabel = accountLabels.getString("name");
-                    for (int i = 0; i < labels.size(); i++) {
-                        if (labels.contains(accountLabel)) {
-                            labels.remove(accountLabel);
-                        }
+            for (Label l : accountLabels) {
+                String accountLabelName = l.getLabel();
+                for (int i = 0; i < labels.size(); i++) {
+                    if (labels.contains(accountLabelName)) {
+                        labels.remove(accountLabelName);
                     }
                 }
-            } else {
-                throw new IllegalArgumentException();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            throw new IllegalArgumentException();
         }
 
-        if (labels == null || labels.isEmpty()) {
+
+        if (labels.isEmpty()) {
             throw new IllegalArgumentException();
         }
 
@@ -93,5 +81,18 @@ public class LabelManager {
 
     //todo: setLabels -> add labels to an expense entry
 
+    public Set<Label> getLabels() {
+        Set<Label> labelSet = new HashSet<>();
+
+        String sql = String.format("SELECT * FROM label WHERE id_account=%s", accountId);
+        List<Database.Row> accountLabels = connection.fetchAll(sql);
+
+        for (Database.Row row : accountLabels) {
+            Integer labelId = row.getInteger("id");
+            String accountLabelName = row.getString("name");
+            labelSet.add(new Label(labelId, accountLabelName));
+        }
+        return labelSet;
+    }
 
 }

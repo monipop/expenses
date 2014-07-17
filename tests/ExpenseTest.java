@@ -1,4 +1,5 @@
 import dao.AccountManager;
+import dao.DateConversions;
 import dao.ExpenseManager;
 import database.Database;
 import org.junit.Assert;
@@ -36,7 +37,7 @@ public class ExpenseTest {
         //expense data
         String name = "sainsbury";
         Double amount = 12.5;
-        java.sql.Date date = Manager.convertJavaDateToSqlDate(new Date());
+        java.sql.Date date = DateConversions.convertJavaDateToSqlDate(new Date());
         Set<Label> labels = new HashSet<>();
 
         //add expense

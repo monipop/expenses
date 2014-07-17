@@ -5,8 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 import dataTypes.Account;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -55,23 +61,22 @@ public class LabelTest {
     @Test
     public void testGetLabelById() {
         AccountManager accountM = new AccountManager(connection);
-        LabelManager labelM = new LabelManager(connection);
         Account account = accountM.getFirstAccountFromDB();
+        LabelManager labelM = new LabelManager(connection, account.getId());
 
         Integer labelId = 7;
         System.out.println(labelM.getLabelById(labelId).getLabel());
     }
 
     public String getFirstLabelFromDB(Integer accountId) {
-        try {
-            String sql = "SELECT * FROM label WHERE id_account=" + accountId +" LIMIT 1";
-            ResultSet r = connection.fetch(sql);
-            r.next();
-            return r.getString("name");
-        } catch (SQLException e) {
-            String message = String.format("No labels found for accountId= %s", accountId);
-            throw new IllegalArgumentException(message, e);
-        }
+        String sql = String.format("SELECT * FROM label WHERE id_account=%s LIMIT 1", accountId);
+        Database.Row r = connection.fetchOne(sql);
+        return r.getString("name");
+    }
+
+    public final Integer labelNr() {
+        Map<String, String> properties = Files.readProperties("tests.settings");
+        return Integer.parseInt(properties.get("label"));
     }
 
 
