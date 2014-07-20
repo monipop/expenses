@@ -1,12 +1,10 @@
 import database.Database;
 import dataTypes.Account;
-import dataTypes.Expense;
 import dataTypes.Label;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 

@@ -14,7 +14,7 @@ import java.util.List;
  * Date: 7/17/14
  * Time: 3:15 PM
  */
-public class ExpenseToGsonTest {
+public class ExpenseToJsonTest {
     Database connection;
 
     @Before

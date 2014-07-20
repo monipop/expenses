@@ -1,16 +1,13 @@
 import dao.AccountManager;
-import dao.DateConversions;
 import dao.ExpenseManager;
+import dataTypes.Expense;
 import database.Database;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import dataTypes.Account;
-import dataTypes.Expense;
 import dataTypes.Label;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,23 +18,26 @@ import java.util.Set;
  */
 public class ExpenseTest {
     Database connection;
+    AccountManager accountManager;
+    Account firstAccount;
+    Integer accountId;
 
     @Before
     public void setUp() {
         connection = new Database();
+        accountManager = new AccountManager(connection);
+        firstAccount = accountManager.getFirstAccountFromDB();
+        accountId = firstAccount.getId();
     }
 
-    @Test
+    /*@Test
     public void testInsertExpense() {
-        AccountManager ac = new AccountManager(connection);
-        Account a = ac.getFirstAccountFromDB();
-        Integer accountId = a.getId();
         ExpenseManager m = new ExpenseManager(connection, accountId);
 
         //expense data
-        String name = "sainsbury";
+        String name = "waitrose";
         Double amount = 12.5;
-        java.sql.Date date = DateConversions.convertJavaDateToSqlDate(new Date());
+        java.sql.Date date = util.DateConversions.convertJavaDateToSqlDate(new Date());
         Set<Label> labels = new HashSet<>();
 
         //add expense
@@ -52,17 +52,37 @@ public class ExpenseTest {
         //Assert.assertEquals(e.getDate()     , date);
         //todo: verify labels
     }
-
+*/
     @Test
     public void getLabelsList() {
-        AccountManager ac = new AccountManager(connection);
-        Account a = ac.getFirstAccountFromDB();
-        Integer accountId = a.getId();
         ExpenseManager m = new ExpenseManager(connection, accountId);
 
         Set<Label> labels = m.getLabels(2);
         for (Label s : labels) {
-            System.out.println("label= " + s.getLabel());
+            //System.out.println("label= " + s.getLabel());
+        }
+    }
+
+    @Test
+    public void getExpensesByPeriodTest() {
+        ExpenseManager m = new ExpenseManager(connection, accountId);
+
+        List<Expense> expenseList = m.getCurrentWeekExpenses();
+        for (Expense e : expenseList) {
+            System.out.println(e.getName() + " - " + e.getExpenseId());
+        }
+
+    }
+
+    @Test
+    public void getExpensesByMonthTest() {
+        ExpenseManager m = new ExpenseManager(connection, accountId);
+        int year = 2014;
+        int month = 4;
+
+        List<Expense> expenses = m.getExpensesPerMonth(year, month);
+        for (Expense e : expenses) {
+            System.out.println(e.getName() + " - " + e.getAmount() + " - " + e.getDate());
         }
     }
 

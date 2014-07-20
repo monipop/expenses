@@ -1,7 +1,6 @@
 package database;
 
-
-import dao.DateConversions;
+import util.DateConversions;
 
 import java.io.*;
 import java.sql.*;
@@ -66,10 +65,9 @@ public class Database {
     public int update(String query) {
         try {
             return connect.createStatement().executeUpdate(query);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Exception executing " + query, e);
         }
-        return 0;
     }
 
     //select form table
@@ -171,11 +169,13 @@ public class Database {
 
     public int lastInsertId() {
         int id = 0;
+
         try {
             Statement db_statement = this.connect.createStatement();
             ResultSet result = db_statement.executeQuery("SELECT LAST_INSERT_ID() AS id");
             result.next();
             id = Integer.parseInt(result.getString("id"));
+            //System.out.println("result.getString = " + result.getString("id"));
             System.out.println("last inserted id = " + id);
 
         } catch (SQLException e) {

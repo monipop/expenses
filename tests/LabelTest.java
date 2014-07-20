@@ -4,15 +4,9 @@ import database.Database;
 import org.junit.Before;
 import org.junit.Test;
 import dataTypes.Account;
+import util.Files;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.

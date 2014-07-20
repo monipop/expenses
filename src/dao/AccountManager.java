@@ -3,7 +3,6 @@ package dao;
 import database.*;
 import dataTypes.*;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 /**
