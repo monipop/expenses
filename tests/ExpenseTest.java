@@ -1,14 +1,16 @@
+import Json.ExpenseToJson;
 import dao.AccountManager;
 import dao.ExpenseManager;
 import dataTypes.Expense;
 import database.Database;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import dataTypes.Account;
 import dataTypes.Label;
+import util.Files;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,15 +32,17 @@ public class ExpenseTest {
         accountId = firstAccount.getId();
     }
 
-    /*@Test
+    @Test
     public void testInsertExpense() {
         ExpenseManager m = new ExpenseManager(connection, accountId);
 
         //expense data
-        String name = "waitrose";
-        Double amount = 12.5;
+        String name = "test insert";
+        Double amount = 1.5;
         java.sql.Date date = util.DateConversions.convertJavaDateToSqlDate(new Date());
-        Set<Label> labels = new HashSet<>();
+        Set<Label> labels = new TreeSet<>();
+        labels.add(new Label(22, "lala"));
+        labels.add(new Label(24, "asda"));
 
         //add expense
         Integer id = m.addExpense(new Expense(accountId, name, amount, date, labels));
@@ -52,7 +56,7 @@ public class ExpenseTest {
         //Assert.assertEquals(e.getDate()     , date);
         //todo: verify labels
     }
-*/
+
     @Test
     public void getLabelsList() {
         ExpenseManager m = new ExpenseManager(connection, accountId);
@@ -81,9 +85,31 @@ public class ExpenseTest {
         int month = 4;
 
         List<Expense> expenses = m.getExpensesPerMonth(year, month);
-        for (Expense e : expenses) {
+        /*for (Expense e : expenses) {
             System.out.println(e.getName() + " - " + e.getAmount() + " - " + e.getDate());
-        }
+        }*/
+    }
+
+    @Test
+    public void getAllExpenses() {
+        ExpenseManager m = new ExpenseManager(connection, accountId);
+
+//        System.out.println(m.getJsonExpenses(m.getExpenses()));
+    }
+
+    /*@Test
+    public void writeJsonFile() {
+        ExpenseManager m = new ExpenseManager(connection, accountId);
+
+        System.out.println(m.getJsonExpenses(m.getExpenses()));
+        Files.writeFile(m.getJsonExpenses(m.getExpenses()));
+
+    }*/
+
+    @Test
+    public void deleteExpense() {
+        ExpenseManager m = new ExpenseManager(connection, accountId);
+        m.deleteExpense(92);
     }
 
 }

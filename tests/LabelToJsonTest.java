@@ -1,3 +1,4 @@
+import Json.LabelToJson;
 import dao.AccountManager;
 import dao.LabelManager;
 import dataTypes.Account;
@@ -28,8 +29,8 @@ public class LabelToJsonTest {
         Account account = accountManager.getFirstAccountFromDB();
         LabelManager labelManager = new LabelManager(connection, account.getId());
 
-        Set<Label> labels = labelManager.getLabels();
+        Set<Label> labels = labelManager.getAccountLabels();
         LabelToJson labelToJson = new LabelToJson(labels);
-        labelToJson.expenseSerialized();
+        System.out.println(labelToJson.expenseSerialized());
     }
 }

@@ -3,3 +3,4 @@ tests.properties
 out/*
 Expenses.iml
 .idea/*
+target/*

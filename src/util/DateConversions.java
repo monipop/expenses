@@ -2,8 +2,7 @@ package util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,13 +19,29 @@ public class DateConversions {
         return new SimpleDateFormat("dd-MM-yyyy");
     }
 
-
     public static java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
         return new java.sql.Date(date.getTime());
     }
 
+    public static String reverseDate(String date) {
+        String[] d = date.split("-");
+        List<String> list = Arrays.asList(d);
+        Collections.reverse(list);
+        return  StringManipulations.join(list, "-");
+    }
 
-    public static java.sql.Date convertStringDateToSqlDate(String data) {
+
+    public static java.sql.Date convertddMMyyyyStringDateToSqlDate(String data) {
+        try {
+            SimpleDateFormat format = DateConversions.ddMMyyyyFormat();
+            Date parsed = format.parse(data);
+            return new java.sql.Date(parsed.getTime());
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Date format is incorrect" , e);
+        }
+    }
+
+    public static java.sql.Date convertyyyyMMddStringDateToSqlDate(String data) {
         try {
             SimpleDateFormat format = DateConversions.yyyyMMddFormat();
             Date parsed = format.parse(data);
@@ -39,7 +54,7 @@ public class DateConversions {
     public static String getFirstDayOfTheWeek() {
         Calendar cal = getFirstDayOfWeekCalendar();
 
-        SimpleDateFormat f = DateConversions.yyyyMMddFormat();
+        SimpleDateFormat f = DateConversions.ddMMyyyyFormat();
         System.out.println("first day of week: " + f.format(cal.getTime()));
         return f.format(cal.getTime());
     }
@@ -50,7 +65,7 @@ public class DateConversions {
         int lastDay = 6 + cal.get(Calendar.DAY_OF_YEAR);
         cal.set(Calendar.DAY_OF_YEAR, lastDay);
 
-        SimpleDateFormat f = DateConversions.yyyyMMddFormat();
+        SimpleDateFormat f = DateConversions.ddMMyyyyFormat();
         System.out.println("last day of week: " + f.format(cal.getTime()));
         return f.format(cal.getTime());
     }
@@ -60,7 +75,7 @@ public class DateConversions {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
 
-        SimpleDateFormat f = DateConversions.yyyyMMddFormat();
+        SimpleDateFormat f = DateConversions.ddMMyyyyFormat();
         return f.format(cal.getTime());
     }
 
@@ -71,14 +86,14 @@ public class DateConversions {
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.DATE, -1);
 
-        SimpleDateFormat f = DateConversions.yyyyMMddFormat();
+        SimpleDateFormat f = DateConversions.ddMMyyyyFormat();
         return f.format(cal.getTime());
     }
 
     public static String getFirstDayOfTheMonth(int year, int month) {
-        SimpleDateFormat f = DateConversions.yyyyMMddFormat();
+        SimpleDateFormat f = DateConversions.ddMMyyyyFormat();
         String date = String.format("%s-%s-1", year, month);
-        return f.format(DateConversions.convertStringDateToSqlDate(date));
+        return f.format(DateConversions.convertddMMyyyyStringDateToSqlDate(date));
     }
 
     public static String getLastDayOfTheMonth(int year, int month) {
@@ -87,7 +102,7 @@ public class DateConversions {
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.DATE, -1);
 
-        SimpleDateFormat f = DateConversions.yyyyMMddFormat();
+        SimpleDateFormat f = DateConversions.ddMMyyyyFormat();
         return f.format(cal.getTime());
     }
 

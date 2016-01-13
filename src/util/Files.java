@@ -1,8 +1,6 @@
 package util;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -45,5 +43,21 @@ public class Files {
             }
         }
         return propSet;
+    }
+
+    public static void writeFile(String path, String name, String text) {
+        String fileName = path + name;
+
+        try {
+            File file = new File(fileName);
+            FileOutputStream is = new FileOutputStream(file);
+            OutputStreamWriter output = new OutputStreamWriter(is);
+            //BufferedWriter output = new BufferedWriter(new FileWriter(file));
+            output.write(text);
+            output.close();
+
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Problem writing the file" + fileName, e);
+        }
     }
 }

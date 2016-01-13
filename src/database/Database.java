@@ -2,6 +2,7 @@ package database;
 
 import util.DateConversions;
 
+import javax.servlet.ServletContext;
 import java.io.*;
 import java.sql.*;
 import java.sql.Date;
@@ -28,10 +29,15 @@ public class Database {
         String user = null;
         String password = null;
 
+
         try {
-            input = new FileInputStream(fileName);
+            //System.out.println(System.getProperty("user.dir"));
 
             //load the properties file
+            input = this.getClass().getClassLoader().getResourceAsStream("/config.properties");
+            if (input == null) {
+                input = new FileInputStream(fileName);
+            }
             prop.load(input);
 
             if (!prop.isEmpty()) {
@@ -40,7 +46,7 @@ public class Database {
                 password = prop.getProperty("password");
             }
         } catch (IOException e) {
-            String message = String.format("File %s was not found.", fileName);
+            String message = String.format("File %s was not found. %s", fileName, input);
             throw new IllegalArgumentException(message, e);
         } finally {
             if (input != null) {
@@ -149,6 +155,13 @@ public class Database {
             return Integer.parseInt(getString(column));
         }
 
+        public Long getLong(String column) {
+            if (!data.containsKey(column)) {
+                throw new IllegalArgumentException("Column does not exists " + column);
+            }
+            return Long.parseLong(getString(column));
+        }
+
         public Double getDouble(String column) {
             if (!data.containsKey(column)) {
                 throw new IllegalArgumentException("Column does not exists " + column);
@@ -162,12 +175,12 @@ public class Database {
             }
             String data = getString(column);
 
-            return DateConversions.convertStringDateToSqlDate(data);
+            return DateConversions.convertyyyyMMddStringDateToSqlDate(data);
         }
     }
 
 
-    public int lastInsertId() {
+    public Integer lastInsertId() {
         int id = 0;
 
         try {

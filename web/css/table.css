@@ -1,0 +1,28 @@
+body {
+    font-size: 14px;
+    font-family: Arial, Verdana;
+}
+
+.table {
+    display: table;
+    border: 1px #000 solid;
+}
+.table-row {
+    display: table-row;
+}
+.table-row>* {
+    display: table-cell;
+    border: 1px #000 solid;
+    width: 140px;
+}
+
+.row-hover {
+    background-color: #F2F6FA;
+}
+#expenses.table {
+    width: inherit;
+}
+#totalAmount {
+    font-weight: bold;
+}
+

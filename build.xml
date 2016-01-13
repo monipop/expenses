@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Expenses">
+<target name="clean">
+    <delete dir="target"/>
+    <mkdir dir="target"/>
+    <mkdir dir="target/classes"/>
+</target>
+
+<path id="classpath">
+    <fileset dir="lib">
+        <include name="**/*.jar"/>
+    </fileset>
+</path>
+
+<target name="compile" depends="clean">
+    <javac classpathref="classpath"
+           srcdir="src/"
+           destdir="target/classes"/>
+</target>
+
+<target name="war" depends="compile">
+    <copy file="config.properties" todir="target/classes/"/>
+    <war file="target/expenses.war">
+        <classes dir="target/classes"/>
+        <lib dir="lib" excludes="servlet-api.jar"/>
+        <fileset dir="web">
+            <include name="**/*.*"/>
+        </fileset>
+    </war>
+</target>
+
+<target name="deploy" depends="war">
+    <copy file="target/expenses.war" todir="/home/moni/apache-tomcat-7.0.39/webapps/"/>
+</target>
+</project>

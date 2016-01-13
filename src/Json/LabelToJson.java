@@ -1,3 +1,5 @@
+package Json;
+
 import com.google.gson.Gson;
 import dataTypes.Label;
 
@@ -16,9 +18,8 @@ public class LabelToJson {
         this.labelList = expenseList;
     }
 
-    public Gson expenseSerialized() {
+    public String expenseSerialized() {
         Gson gson = new Gson();
-        System.out.print(gson.toJson(labelList));
-        return gson;
+        return gson.toJson(labelList);
     }
 }

@@ -1,0 +1,70 @@
+<div id="expensesBlock">
+    <div id="topLinks">
+        <a id="logout" href="#">logout</a>
+    </div>
+    <a href="/expenses/labels.html">account labels</a>
+    <span>&#160;&#160;</span>
+
+    <a id="currentWeek">Current week</a>
+    <span>&#160;|&#160;</span>
+    <a id="currentMonth">Current month</a>
+    <span>&#160;|&#160;</span>
+    <a id="currentYear">Current year</a>
+    <span>&#160;|&#160;</span>
+    <a id="allExpenses">All expenses</a>
+
+
+
+    <div id="#error-message-wrapper">
+        Errors:
+    </div>
+
+
+    <form id="filter-date">
+        <label for="from">From</label>
+        <input type="text" id="from" name="from">
+        <label for="to">to</label>
+        <input type="text" id="to" name="to">
+        <input type="submit" value="display"/>
+    </form>
+
+    <form id="filter-labels">
+        <div id="select-labels-filter">
+            <select id="labels-filter" multiple="multiple">
+
+            </select>
+        </div>
+        <input type="submit" value="filter"/>
+    </form>
+
+
+    <div id="expenses" class="table">
+        <div>
+            <div class="table-row">
+                <div>Idx</div>
+                <div>Name</div>
+                <div>Amount</div>
+                <div>Date</div>
+                <div>Labels</div>
+                <div>Add</div>
+            </div>
+        </div>
+        <form action="expenses.html" id="addExpense">
+            <div class="table-row">
+                <div> - </div>
+                <div><input type="text" name="name" data-validation="length" data-validation-length="1-100"/></div>
+                <div><input type="text" name="amount" data-validation="number" data-validation-allowing="float"/></div>
+                <div><input type="text" name="date" data-validation="birthdate" data-validation-format="dd-mm-yyyy" id="datepicker"/></div>
+                <div id="select-labels-add">
+                    <select id="labels-add" multiple="multiple">
+
+                    </select>
+                </div>
+                <div><input type="submit" value="add"/></div>
+            </div>
+        </form>
+        <div>
+            <div id="expenses-list"></div>
+        </div>
+    </div>
+</div>
