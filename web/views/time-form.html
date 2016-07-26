@@ -1,0 +1,27 @@
+<div class="container" ng-controller="TimeFormController">
+    <div>{{message}}</div>
+
+    <form novalidate class="form-horizontal"
+          name="timeFilter"
+          ng-submit="filter()">
+        <div class="form-group">
+            <label for="from" class="control-label col-sm-1">From:</label>
+            <div class="col-sm-11">
+                <input type="date" ng-model="from" id="from" name="from" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="to" class="control-label col-sm-1">To:</label>
+            <div class="col-sm-11">
+                <input type="date" ng-model="to" id="to" name="to" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+</div>

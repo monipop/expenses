@@ -56,7 +56,8 @@ public class Statistics {
             List<String> sqlCondition = sqlLabelCondition(labels);
             String sqlCond = sqlCondition.get(0);
 
-            if (from.equals("null") && to.equals("null")) {
+            list = m.getExpenses();
+            /*if (from.equals("null") && to.equals("null")) {
                 list = m.getExpensesWithOneOfLabel(sqlCond);
             } else if (from.equals("null")) {
                 list = m.getExpensesStartingFrom(sqlCond, from);
@@ -64,7 +65,7 @@ public class Statistics {
                 list = m.getExpensesEndingAt(sqlCond, to);
             } else {
                 list = m.getExpensesWithOneOfLabel(sqlCondition.toString(), from, to);
-            }
+            }*/
         }
 
         return list;

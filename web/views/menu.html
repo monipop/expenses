@@ -1,0 +1,11 @@
+<nav class="navbar navbar-inverse" role="navigation"
+    ng-controller="MenuController">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="#">Logo space</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li><a ui-sref="home" href="/home">Home</a></li>
+        <li><a ui-sref="expenses({from: '{{fromDate | date: 'MM-dd-yyyy'}}', to: '{{toDate | date: 'MM-dd-yyyy'}}' })"
+               href="/expenses">Expenses</a></li>
+    </ul>
+</nav>

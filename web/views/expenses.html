@@ -1,0 +1,28 @@
+<div ng-controller="ExpensesController">
+    <div class="row row-content">
+        <table class="table table-condensed table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Labels</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entry in expenses">
+                <td>{{entry.name}}</td>
+                <td>{{entry.amount}}</td>
+                <td>{{entry.date}}</td>
+                <td>
+                    <ul class="list-inline">
+                        <li ng-repeat="label in entry.labels">
+                            <span class="label label-default">{{label.label}}</span>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

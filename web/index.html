@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/angular/angular-route.min.js"></script>
+    <script src="js/angular/angular-ui-router.min.js"></script>
+    <script src="js/angular/angular-resource.min.js"></script>
+    <script src="js/controllers/app.js"></script>
+    <script src="js/controllers/menuController.js"></script>
+    <script src="js/controllers/expensesController.js"></script>
+    <script src="js/controllers/timeFormController.js"></script>
+    <script src="js/services/expensesService.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/expenses.css" />
+
+    <script type="text/javascript">
+        angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
+    </script>
+</head>
+<body ng-app="financesApp">
+
+<a href="home">Home</a> |
+<a href="expenses">Expenses</a> |
+
+   <div ui-view></div>
+
+
+   <!-- MENU -->
+<div ui-view="menu"></div>
+
+<div ui-view="home"></div>
+
+<div class="col-xs-12">
+    <div class="col-xs-7">
+        <div ui-view="expenses"></div>
+    </div>
+    <div class="col-xs-5">
+        <div ui-view="time-form"></div>
+    </div>
+</div>
+
+</body>
+</html>

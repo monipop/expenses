@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,12 +31,26 @@ public class AllExpenses extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        //results to http://localhost:8080/expenses/expenses
 
         HttpParameters param = new HttpParameters(request);
-        Integer accountId = param.getInteger("accountId");
+        System.out.println("!!!!Parameters:");
+        Enumeration params = request.getParameterNames();
+        System.out.println("has params: " + params.hasMoreElements());
+        while(params.hasMoreElements()){
+            String paramName = (String)params.nextElement();
+            System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
+        }
+
+
+        /*Integer accountId = param.getInteger("accountId");
         String from = param.getString("from");
         String to = param.getString("to");
-        String labelIds = param.getString("labels");
+        String labelIds = param.getString("labels");*/
+        Integer accountId = 14;
+        String from = "";
+        String to = "14-01-2016";
+        String labelIds = "";
 
         Database connection = new Database();
         ExpenseManager m = new ExpenseManager(connection, accountId);
