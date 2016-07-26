@@ -1,6 +1,6 @@
 config.properties
 tests.properties
 out/*
-Expenses.iml
+finances.iml
 .idea/*
 target/*

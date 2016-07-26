@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Expenses">
+<project name="finances">
 <target name="clean">
     <delete dir="target"/>
     <mkdir dir="target"/>
@@ -20,7 +20,7 @@
 
 <target name="war" depends="compile">
     <copy file="config.properties" todir="target/classes/"/>
-    <war file="target/expenses.war">
+    <war file="target/finances.war">
         <classes dir="target/classes"/>
         <lib dir="lib" excludes="servlet-api.jar"/>
         <fileset dir="web">
@@ -30,6 +30,6 @@
 </target>
 
 <target name="deploy" depends="war">
-    <copy file="target/expenses.war" todir="/home/moni/apache-tomcat-7.0.39/webapps/"/>
+    <copy file="target/finances.war" todir="/home/moni/IdeaProjects/webapps/"/>
 </target>
 </project>
